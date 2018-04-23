@@ -1,0 +1,27 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "A command-line language interpretation and recognition interface (LIRI). Built for the NU Coding Bootcamp 2018.",
+  "main": "liri.js",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "node-spotify-api": "^1.0.7",
+    "npm": "^5.8.0",
+    "request": "^2.85.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carladdg/liri-node-app.git"
+  },
+  "author": "Carla Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carladdg/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/carladdg/liri-node-app#readme"
+}
