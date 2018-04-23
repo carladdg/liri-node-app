@@ -1,13 +1,18 @@
-var Twitter = require("twitter");
-var Spotify = require("node-spotify-api");
-var request = require("request");
-var fs = require("fs");
 require("dotenv").config();
-
 var keys = require("./keys.js");
 
-var spotify = new Spotify(keys.spotify);
+var Twitter = require("twitter");
 var twitter = new Twitter(keys.twitter);
+
+var Spotify = require("node-spotify-api");
+var spotify = new Spotify(keys.spotify);
+
+var request = require("request");
+
+var fs = require("fs");
+
+var chalk = require("chalk");
+var chalkTitle = chalk.black;
 
 var command = process.argv[2];
 var content = process.argv[3];
@@ -61,9 +66,9 @@ function getTweets() {
             throw error;
         }
 
-        console.log("\nLatest Tweets from @carlabot2018");
+        console.log(chalkTitle.bgCyanBright("\nLatest Tweets from @carlabot2018"));
         tweets.forEach(function(tweet) {
-            console.log(`\n${tweet.created_at}\n${tweet.text}`);
+            console.log(chalk`\n{cyanBright ${tweet.created_at}} \n${tweet.text}`);
         })
     })
 }
@@ -79,8 +84,8 @@ function searchSpotify(song) {
         var songArtist = data.tracks.items[0].artists[0].name;
         var songAlbum = data.tracks.items[0].album.name;
 
-        console.log("\nYour Spotify Search Results");
-        console.log(`\nTrack: ${songName} \nArtist: ${songArtist} \nAlbum: ${songAlbum} \nListen Here: ${songLink}`);
+        console.log(chalkTitle.bgGreenBright("\nYour Spotify Search Results"));
+        console.log(chalk`\n{greenBright Track:} ${songName} \n{greenBright Artist:} ${songArtist} \n{greenBright Album:} ${songAlbum} \n{greenBright Listen Here:} ${songLink}`);
     })
 }
 
@@ -99,8 +104,8 @@ function searchOmdb(movie) {
                 var moviePlot = movieInfo.Plot;
                 var movieActors = movieInfo.Actors;
                 
-                console.log("\nYour OMDB Search Results");
-                console.log(`\n${movieTitle} (${movieYear}) \nStarring ${movieActors} \n\n${moviePlot} \n\nProduced in ${movieCountry}\nLanguages Spoken: ${movieLanguage} \n\nIMDB: ${movieImdbRating} \nRotten Tomatoes: ${movieRottenTomatoesRating}`);
+                console.log(chalkTitle.bgYellowBright("\nYour OMDB Search Results"));
+                console.log(chalk`\n{yellowBright.underline ${movieTitle} (${movieYear})} \n\n${moviePlot} \nStarring ${movieActors} \n\n{yellowBright Produced In:} ${movieCountry}\n{yellowBright Languages Spoken:} ${movieLanguage} \n\n{yellowBright IMDB Rating:} ${movieImdbRating} \n{yellowBright Rotten Tomatoes Rating:} ${movieRottenTomatoesRating}`);
             } else {
                 console.log(movieInfo.Error);
             }

@@ -4,6 +4,7 @@
   "description": "A command-line language interpretation and recognition interface (LIRI). Built for the NU Coding Bootcamp 2018.",
   "main": "liri.js",
   "dependencies": {
+    "chalk": "^2.4.0",
     "dotenv": "^5.0.1",
     "node-spotify-api": "^1.0.7",
     "npm": "^5.8.0",
