@@ -14,6 +14,8 @@ var fs = require("fs");
 var chalk = require("chalk");
 var chalkTitle = chalk.black;
 
+// inquirer prompt to execute - then run liri
+
 var command = process.argv[2];
 var content = process.argv[3];
 runLiri(command, content);
@@ -58,6 +60,8 @@ function runLiri(command, content) {
             runLiri(randomCommand, randomContent);
         })
     }
+
+    logActivity(command, content);
 }
 
 function getTweets() {
@@ -110,6 +114,21 @@ function searchOmdb(movie) {
                 console.log(movieInfo.Error);
             }
         } else {
+            throw error;
+        }
+    })
+}
+
+function logActivity(command, content) {
+    var record = "";
+    if (content) {
+        record = `${command} ${content}; `;
+    } else {
+        record = `${command}; `;
+    }
+    
+    fs.appendFile("log.txt", record, function(error) {
+        if (error) {
             throw error;
         }
     })
