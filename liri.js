@@ -14,7 +14,6 @@ var fs = require("fs");
 var chalk = require("chalk");
 var chalkTitle = chalk.black;
 
-// inquirer prompt to execute - then run liri
 
 var command = process.argv[2];
 var content = process.argv[3];
@@ -25,7 +24,7 @@ function runLiri(command, content) {
         getTweets();
     }
     
-    if (command === "spotify-this-song") {
+    else if (command === "spotify-this-song") {
         var song = "";
         if (content) {
             song = content;
@@ -36,7 +35,7 @@ function runLiri(command, content) {
         searchSpotify(song);
     }
     
-    if (command === "movie-this") {
+    else if (command === "movie-this") {
         var movie = "";
         if (content) {
             movie = content;
@@ -47,7 +46,7 @@ function runLiri(command, content) {
         searchOmdb(movie);
     }
     
-    if (command === "do-what-it-says") {
+    else if (command === "do-what-it-says") {
         fs.readFile("./random.txt", "utf8", function(error, data) {
             if (error) {
                 throw error;
@@ -59,6 +58,10 @@ function runLiri(command, content) {
 
             runLiri(randomCommand, randomContent);
         })
+    }
+
+    else {
+        return console.log("Sorry, you entered an invalid LIRI command.");
     }
 
     logActivity(command, content);
