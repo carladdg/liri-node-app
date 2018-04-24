@@ -11,14 +11,61 @@ var request = require("request");
 
 var fs = require("fs");
 
+var inquirer = require("inquirer");
+
 var chalk = require("chalk");
 var chalkTitle = chalk.black;
 
-// inquirer prompt to execute - then run liri
 
-var command = process.argv[2];
-var content = process.argv[3];
-runLiri(command, content);
+var command = "";
+var content = "";
+initializeLiri();
+
+function initializeLiri() {
+    console.log("\nWelcome to LIRI: Language Interpretation and Recognition Interface!");
+    inquirer.prompt([
+        {
+            name: "command",
+            type: "list",
+            message: "What would you like to do?",
+            choices: [
+                { name: "See my Tweets", value: "my-tweets" },
+                { name: "Search for a song on Spotify", value: "spotify-this-song" },
+                { name: "Look up a movie on OMDB", value: "movie-this" },
+                { key: "test", name: "Surprise me", value: "do-what-it-says" },
+                "Quit LIRI"
+            ]
+        }
+    ]).then(function(response) {
+        command = response.command;
+        var keyword = "";
+
+        if (command === "spotify-this-song") {
+            keyword = "song";
+        } else if (command === "movie-this") {
+            keyword = "movie";
+        }
+
+        if (keyword) {
+            getContent(keyword);
+        } else {
+            runLiri(command, content);
+        }
+    })
+}
+
+function getContent(keyword) {
+    inquirer.prompt([
+        {
+            name: keyword,
+            type: "input",
+            message: `Please enter a ${keyword} title (or leave it blank for a surprise ${keyword}!)`
+        }
+    ]).then(function(response) {
+        content = response[keyword];
+        runLiri(command, content);
+    })
+}
 
 function runLiri(command, content) {
     if (command === "my-tweets") {
@@ -62,6 +109,8 @@ function runLiri(command, content) {
     }
 
     logActivity(command, content);
+    // initializeLiri(); 
+    // ARGHH HOW DO I GET THIS TO RUN SYNCHRONOUSLY
 }
 
 function getTweets() {
@@ -126,7 +175,7 @@ function logActivity(command, content) {
     } else {
         record = `${command}; `;
     }
-    
+
     fs.appendFile("log.txt", record, function(error) {
         if (error) {
             throw error;
